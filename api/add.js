@@ -3,16 +3,19 @@ const supabase = require('../config/database/db_supabase');
 module.exports = async (req, res) => {
     try {
 
-        let { data: usuarios, error } = await supabase
+        const { data, error } = await supabase
             .from('usuarios')
-            .select("id,name,email")
+            .insert([
+                { id: '300', 
+                name: 'baz',
+                email: "baz@baz.com"},
+            ]);
 
         if (error) {
-            throw new Error("ocurrió un error:" + error)
+            throw new Error(`error: ${error}`)
         }
-
         res.status(200).json({
-            usuarios
+            data
         })
 
     } catch (error) {
